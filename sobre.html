@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webProyecto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Tu estilo personalizado -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- fuentes-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!--CAROUSEL-->
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/banner/op-06_banner.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/banner/op-05_banner.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/banner/op-06_banner.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div id="sobre" class="image-container mt-4" style="display: flex; justify-content: center;" onclick="playAnimation()">
+            <img src="images/sobre.webp" alt="Animación" id="animationImage">
+        </div>
+
+        <script>
+            // Lista de imágenes que forman la animación
+            const frames = [
+                "images/sobre.webp",
+                "images/sobre2.webp",
+                "images/sobre3.webp",
+                "images/sobre4.webp",
+                "images/sobre5.webp",
+                "images/sobre6.webp",
+                "images/sobre7.webp",
+                "images/sobre8.webp",
+                "images/sobre9.webp",
+                "images/carta.webp" // Última imagen que queda fija
+            ];
+
+            let currentFrame = 0; // Para rastrear el frame actual
+            let animationInterval; // Intervalo para manejar la animación
+
+            function playAnimation() {
+                const imageElement = document.getElementById("animationImage");
+
+                // Si ya se está animando, no iniciar otra vez
+                if (animationInterval) return;
+
+                // Ejecutar la animación frame por frame
+                animationInterval = setInterval(() => {
+                    currentFrame++; // Cambiar al siguiente frame
+
+                    if (currentFrame >= frames.length) {
+                        clearInterval(animationInterval); // Detener animación al final
+                        animationInterval = null; // Resetear intervalo
+                        startFinalAnimation(imageElement); // Ejecutar el giro, zoom y destellos
+                        return;
+                    }
+
+                    // Cambiar la imagen del elemento
+                    imageElement.src = frames[currentFrame];
+                }, 60); // Cambiar cada 150ms (ajusta este valor según el efecto deseado)
+            }
+
+            function startFinalAnimation(imageElement) {
+                // Paso 1: Agregar el zoom
+                imageElement.classList.add("zoom");
+                // Esperar un momento antes de continuar con el giro
+                setTimeout(() => {
+                    imageElement.classList.remove("zoom");
+                    imageElement.classList.add("flip");
+
+                    // Paso 2: Después del giro, agregar los destellos
+                    setTimeout(() => {
+                        imageElement.classList.remove("flip");
+                        imageElement.classList.add("flash");
+
+                        // Paso 3: Detener los destellos y dejar la imagen fija
+                        setTimeout(() => {
+                            imageElement.classList.remove("flash");
+                            imageElement.src = "images/carta.webp"; // Asegura la imagen final
+                        }, 1000); // Duración de los destellos (1s)
+                    }, 1000); // Duración del giro horizontal (1s)
+                }, 500); // Duración del zoom (0.5s)
+            }
+        </script>
+    </div>
+
+    <!--bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+
+</html>
